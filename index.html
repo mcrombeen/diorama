@@ -4,10 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Image on Canvas</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
 </head>
 <body>
-  <input type="file" id="imageLoader" name="imageLoader" accept="image/*">
-  <canvas id="canvas" width="800" height="600" style="border:1px solid #000;"></canvas>
+  <input type="file" id="imageLoader" name="imageLoader" accept="image/*" style="position:absolute; z-index:1;">
+  <canvas id="canvas"></canvas>
 
   <script>
     const imageLoader = document.getElementById('imageLoader');
@@ -15,6 +27,9 @@
 
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
     let img = new Image();
 
@@ -30,7 +45,7 @@
     }
 
     function placeImage(e) {
-      const rect = canvas.getBoundingClientRect();
+            const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       ctx.drawImage(img, x, y);
@@ -38,3 +53,4 @@
   </script>
 </body>
 </html>
+
