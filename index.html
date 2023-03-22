@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image on Canvas</title>
+</head>
+<body>
+  <input type="file" id="imageLoader" name="imageLoader" accept="image/*">
+  <canvas id="canvas" width="800" height="600" style="border:1px solid #000;"></canvas>
+
+  <script>
+    const imageLoader = document.getElementById('imageLoader');
+    imageLoader.addEventListener('change', handleImage, false);
+
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    let img = new Image();
+
+    function handleImage(e) {
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        img.onload = function () {
+          canvas.addEventListener('click', placeImage, false);
+        }
+        img.src = event.target.result;
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    }
+
+    function placeImage(e) {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      ctx.drawImage(img, x, y);
+    }
+  </script>
+</body>
+</html>
