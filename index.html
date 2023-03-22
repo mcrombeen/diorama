@@ -28,13 +28,8 @@
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
 
-    function setCanvasSize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-
-    setCanvasSize();
-    window.addEventListener('resize', setCanvasSize);
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
     let img = new Image();
 
@@ -42,19 +37,17 @@
       const reader = new FileReader();
       reader.onload = function (event) {
         img.onload = function () {
-          canvas           canvas.addEventListener('click', placeImage, false);
+          canvas.addEventListener('click', placeImage, false);
         }
         img.src = event.target.result;
       }
       reader.readAsDataURL(e.target.files[0]);
     }
 
-    function placeImage(e) {
-      const rect = canvas.getBoundingClientRect();
+    function placeImage(e) {       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       ctx.drawImage(img, x, y);
-      console.log(`Image placed at x: ${x}, y: ${y}`);
     }
   </script>
 </body>
